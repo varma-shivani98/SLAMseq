@@ -1,8 +1,8 @@
-SLAM-seq | Nascent RNA Analysis
+# SLAM-seq | Nascent RNA Analysis
 
-A computational workflow for investigating nascent transcription and RNA dynamics using SLAM-seq data.
+**A computational workflow for investigating nascent transcription and RNA dynamics using SLAM-seq data.**
 
-🧬 Overview
+## 🧬 Overview
 
 SLAM-seq (Thiol-linked Alkylation for the Metabolic Sequencing of RNA) is a metabolic RNA-labeling approach that enables the identification and quantification of newly synthesized RNA.
 
@@ -12,26 +12,21 @@ This repository is intended to document computational approaches for processing 
 
 The workflow is particularly relevant to studying transcriptional regulation and RNA dynamics in cancer biology.
 
-🎯 Objectives
+## 🎯 Objectives
 
 The main objectives of this analysis are to:
 
-Process and perform quality control of SLAM-seq sequencing data.
+- Process and perform quality control of SLAM-seq sequencing data.
+- Identify T-to-C nucleotide conversions associated with newly synthesized RNA.
+- Quantify nascent RNA abundance across experimental conditions.
+- Investigate changes in transcriptional activity following experimental perturbations.
+- Identify genes exhibiting significant changes in newly synthesized RNA.
+- Visualize global and gene-specific transcriptional responses.
+- Facilitate integration of SLAM-seq results with conventional RNA-seq and other omics datasets.
 
-Identify T-to-C nucleotide conversions associated with newly synthesized RNA.
+## 🔬 Analysis workflow
 
-Quantify nascent RNA abundance across experimental conditions.
-
-Investigate changes in transcriptional activity following experimental perturbations.
-
-Identify genes exhibiting significant changes in newly synthesized RNA.
-
-Visualize global and gene-specific transcriptional responses.
-
-Facilitate integration of SLAM-seq results with conventional RNA-seq and other omics datasets.
-
-🔬 Analysis workflow
-
+```text
 Raw sequencing data (FASTQ)
             |
             v
