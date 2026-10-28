@@ -1,0 +1,48 @@
+###GSEA : Import the DEG file 
+
+res2 <- X240708_TC_ctrl_conditions %>%
+  dplyr::select(Gene_id, stat) %>%
+  na.omit() %>%
+  distinct() %>%
+  group_by(Gene_id) %>%
+  summarize(stat=mean(stat))
+
+ranks <- tibble::deframe(res2)
+head(ranks,20)
+
+pathways.hallmark <- gmtPathways("Z:/R_scripts/h.all.v7.5.1.symbols.gmt")
+pathways.hallmark %>%
+  head() %>%
+  lapply(head)
+
+fgseaRes<- fgsea(pathways=pathways.hallmark,stats=ranks,scoreType="std")
+
+fgseaResTidy <- fgseaRes %>%
+  as_tibble() %>%
+  arrange(desc(NES))
+ggplot(fgseaResTidy, aes(reorder(pathway, NES), NES)) +
+  geom_col(aes(fill=padj<0.05)) +
+  coord_flip() +
+  labs(x="Pathway", y="Normalized Enrichment Score",
+       title="Hallmark pathways NES from GSEA") +
+  theme_minimal()
+
+head(fgseaRes[order(padj), ])
+
+tail(fgseaRes[order(padj), ])
+
+head(fgseaResTidy)
+tail(fgseaResTidy)
+##plot for significant pathway
+filtered_pathway <- subset(fgseaResTidy, padj < 0.05)
+filt_p <- as.vector(filtered_pathway$pathway)
+head(filt_p)
+
+for (i in filt_p){
+  pdf(paste0(i,".pdf"),height=5,width=5) # change height and width parameter
+  plt <- plotEnrichment(pathway = pathways.hallmark[[i]],
+                        gseaParam = 1, ticksSize = 0.5, stats= ranks) +
+    labs(title=i) + theme(plot.title = element_text(hjust = 0.5, face="bold"))
+  print(plt)
+  dev.off()
+}
