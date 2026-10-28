@@ -1,0 +1,27 @@
+##Make Volcano plot : Use the file which is generated above: just add first column that is gene_id and import the file. Convertion of the . To , .
+X240708_TC_ctrl_conditions$expression = ifelse(X240708_TC_ctrl_conditions$pvalue < 0.01 & abs(X240708_TC_ctrl_conditions$log2FoldChange) >= 0.5, 
+                                               ifelse(X240708_TC_ctrl_conditions$log2FoldChange> 0.5 ,'Up','Down'),
+                                               'NA')
+head(X240708_TC_ctrl_conditions)
+library(ggplot2)
+plot_co <- ggplot(data = X240708_TC_ctrl_conditions, 
+                  aes(x = log2FoldChange, 
+                      y = -log10(X240708_TC_ctrl_conditions$pvalue), 
+                      colour=expression,
+                      label = X240708_TC_ctrl_conditions$Name)) +
+  geom_text_repel(label = X240708_TC_ctrl_conditions$Name)+
+  geom_point(alpha=0.4, size=3.5) +
+  scale_color_manual(values=c("grey", "grey","grey"))+
+  #xlim(c(-4.5, 4.5)) +
+  #ylim(c(0,30)) +
+  geom_vline(xintercept=c(-1,1),lty=4,col="black",lwd=0.8) +
+  geom_hline(yintercept = 1.301,lty=4,col="black",lwd=0.8) +
+  labs(x="log2(fold change)",
+       y="-log10 (adj.p-value)",
+       title="Control_ThiaG_1hr_Slamdunk")  +
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5), 
+        legend.position="right", 
+        legend.title = element_blank())
+plot_co
+
